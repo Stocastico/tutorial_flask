@@ -11,7 +11,7 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Username', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
@@ -21,7 +21,7 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different username')
 
-    def validate_email(self, username):
+    def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Please use a different email address')
